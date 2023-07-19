@@ -2,6 +2,7 @@ package com.thirtythreeapps.brokenscreenprank.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -12,5 +13,10 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+
+    }
+
+    private fun createPrankList():List<PrankModel>{
+        return listOf<PrankModel>(PrankModel(getString(R.string.broken_scre),PrankType.BROKEN_SCREEN_PRANK))
     }
 }
