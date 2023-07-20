@@ -12,10 +12,10 @@
         android:theme="@style/Theme.BrokenScreenPrank"
         tools:targetApi="31">
         <activity
-            android:name=".EffectListActivity"
+            android:name=".ui.chooseEffect.EffectListActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
@@ -26,7 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.home.HomeActivity" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

@@ -12,7 +12,7 @@ class EffectListActivityViewModel() :
             EffectModel(effectDrawableImage = R.drawable.second_crack_effect_preview),
             EffectModel(effectDrawableImage = R.drawable.thired_crack_effect_preview),
             EffectModel(effectDrawableImage = R.drawable.forth_crack_effect_preview),
-            EffectModel(effectDrawableImage = R.drawable.fifth_crack_screen_preview)
+            EffectModel(effectDrawableImage = R.drawable.fifth_crack_effect_preview)
         )
     }
 }

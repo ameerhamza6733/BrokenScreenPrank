@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.databinding.RowPrankTypeBinding
+import com.thirtythreeapps.brokenscreenprank.ui.commen.PrankType
 
-class PrankAdupter(val list: List<PrankModel>) : RecyclerView.Adapter<PrankAdupter.PrankViewHolder>() {
+class PrankAdupter(val list: List<PrankModel>, val onClick:(PrankModel)->Unit) : RecyclerView.Adapter<PrankAdupter.PrankViewHolder>() {
     inner class PrankViewHolder(val prankTypeRow: RowPrankTypeBinding) :
         ViewHolder(prankTypeRow.root)
 
@@ -23,6 +24,9 @@ class PrankAdupter(val list: List<PrankModel>) : RecyclerView.Adapter<PrankAdupt
     override fun onBindViewHolder(holder: PrankViewHolder, position: Int) {
         val prank = list.get(holder.adapterPosition)
         holder.prankTypeRow.tvPrankName.text = prank.title
+        holder.prankTypeRow.root.setOnClickListener {
+            onClick(prank)
+        }
         val context = holder.prankTypeRow.tvPrankName.context
         when(prank.type){
             PrankType.BROKEN_SCREEN_PRANK ->{
