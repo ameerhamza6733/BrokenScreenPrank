@@ -1,4 +1,4 @@
-package com.thirtythreeapps.brokenscreenprank.ui
+package com.thirtythreeapps.brokenscreenprank.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -25,7 +25,7 @@ class PrankAdupter(val list: List<PrankModel>) : RecyclerView.Adapter<PrankAdupt
         holder.prankTypeRow.tvPrankName.text = prank.title
         val context = holder.prankTypeRow.tvPrankName.context
         when(prank.type){
-            PrankType.BROKEN_SCREEN_PRANK->{
+            PrankType.BROKEN_SCREEN_PRANK ->{
                 Glide.with(context).load(R.drawable.home_broken_screen_prank).into(holder.prankTypeRow.ivPrankImage)
             }
         }

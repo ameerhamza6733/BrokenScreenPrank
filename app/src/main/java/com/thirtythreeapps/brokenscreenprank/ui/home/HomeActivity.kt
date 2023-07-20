@@ -1,10 +1,11 @@
-package com.thirtythreeapps.brokenscreenprank.ui
+package com.thirtythreeapps.brokenscreenprank.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.databinding.ActivityHomeBinding
+import com.thirtythreeapps.brokenscreenprank.ui.commen.PrankType
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -18,6 +19,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun createPrankList():List<PrankModel>{
-        return listOf<PrankModel>(PrankModel(getString(R.string.broken_scre),PrankType.BROKEN_SCREEN_PRANK))
+        return listOf<PrankModel>(
+            PrankModel(getString(R.string.broken_scre),
+                PrankType.BROKEN_SCREEN_PRANK
+            )
+        )
     }
 }
