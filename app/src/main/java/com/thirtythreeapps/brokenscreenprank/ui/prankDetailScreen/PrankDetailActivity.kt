@@ -27,6 +27,9 @@ class PrankDetailActivity : AppCompatActivity() {
         }
 
         Glide.with(this).asBitmap().load(effectModel?.effectDrawableImage).into(binding.ivPrankPreview)
+        binding.btShakeActive.setOnClickListener {
+
+        }
     }
 
     companion object{
