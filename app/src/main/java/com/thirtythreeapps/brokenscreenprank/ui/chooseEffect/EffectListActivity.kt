@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.gms.ads.AdRequest
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.databinding.ActivityEffectListBinding
 import com.thirtythreeapps.brokenscreenprank.databinding.RowCrackPreviewBinding
@@ -15,7 +16,8 @@ class EffectListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEffectListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
         binding.layoutToolbar.tvToolBarTitle.text = getString(R.string.crack_effec)
         binding.recyclerView.layoutManager = GridLayoutManager(this,2)
         binding.recyclerView.adapter = EffectListAdapter(viewModel.getCrackEffect())
