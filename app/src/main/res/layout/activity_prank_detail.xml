@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/quantico_bold"
                     android:text="Touch"
-                    android:textColor="@color/activeRadioButtonColor"
+                    android:textColor="@color/activeRadioButtonContentColor"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ivTouchIcon"
@@ -114,6 +114,7 @@
                 >
 
                 <ImageView
+
                     android:id="@+id/ivTouchIconInActive"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,7 +130,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/quantico_bold"
                     android:text="Touch"
-                    android:textColor="@color/inActiveRadioButtonColor"
+                    android:textColor="@color/inActiveRadioButtonContentColor"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ivTouchIconInActive"
