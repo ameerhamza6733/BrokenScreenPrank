@@ -1,13 +1,18 @@
 package com.thirtythreeapps.brokenscreenprank.ui.chooseEffect
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import com.thirtythreeapps.brokenscreenprank.R
 
-class EffectListActivityViewModel(application: Application) : AndroidViewModel(application = application) {
-val context = application.applicationContext
+class EffectListActivityViewModel() :
+    ViewModel() {
 
-    fun getCrackEffect():List<EffectModel>{
-        return listOf<EffectModel>(EffectModel(effectDrawableImage = context.getDrawable()))
+    fun getCrackEffect(): List<EffectModel> {
+        return listOf<EffectModel>(
+            EffectModel(effectDrawableImage = R.drawable.first_crack_effect_preview),
+            EffectModel(effectDrawableImage = R.drawable.second_crack_effect_preview),
+            EffectModel(effectDrawableImage = R.drawable.thired_crack_effect_preview),
+            EffectModel(effectDrawableImage = R.drawable.forth_crack_effect_preview),
+            EffectModel(effectDrawableImage = R.drawable.fifth_crack_screen_preview)
+        )
     }
 }
