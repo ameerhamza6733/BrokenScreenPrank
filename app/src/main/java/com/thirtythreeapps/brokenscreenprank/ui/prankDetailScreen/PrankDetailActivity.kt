@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.fragment.app.DialogFragment.STYLE_NO_TITLE
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
+import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.databinding.ActivityPrankDetailBinding
 import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.effectFromJson
 import com.thirtythreeapps.brokenscreenprank.ui.commen.PrankType
@@ -60,6 +62,15 @@ class PrankDetailActivity : AppCompatActivity() {
 
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
+
+        showDialog()
+    }
+
+    fun showDialog() {
+        val fragmentManager = supportFragmentManager
+        val newFragment = EnableOverLayAlertDialog()
+        newFragment.setStyle(STYLE_NO_TITLE, R.style.my_dialog)
+        newFragment.show(fragmentManager, "dialog")
 
     }
 

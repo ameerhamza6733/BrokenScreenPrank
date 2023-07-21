@@ -12,7 +12,6 @@ import com.thirtythreeapps.brokenscreenprank.databinding.ActivityEffectListBindi
 import com.thirtythreeapps.brokenscreenprank.ui.prankDetailScreen.PrankDetailActivity
 
 class EffectListActivity : AppCompatActivity() {
-    private val TAG ="EffectListActivity"
     private val viewModel: EffectListActivityViewModel by viewModels()
     private lateinit var binding: ActivityEffectListBinding
     override fun onCreate(savedInstanceState: Bundle?) {
