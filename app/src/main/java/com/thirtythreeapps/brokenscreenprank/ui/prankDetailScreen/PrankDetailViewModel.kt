@@ -1,7 +1,21 @@
 package com.thirtythreeapps.brokenscreenprank.ui.prankDetailScreen
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class PrankDetailViewModel : ViewModel() {
-    fun de
+
+    private lateinit var startPrank: StartPrank
+    private val _shakeOrTouchRadioMutableLiveData: MutableLiveData<StartPrank> = MutableLiveData()
+    val shakeAndTouchRadioLiveData: LiveData<StartPrank> = _shakeOrTouchRadioMutableLiveData
+
+    init {
+        startAndTouchRadioClick(StartPrank(StartPrank.START_PRANK_WHEN_TOUCH))
+    }
+
+    fun startAndTouchRadioClick(startPrank: StartPrank) {
+        this.startPrank = startPrank
+        _shakeOrTouchRadioMutableLiveData.value = startPrank
+    }
 }

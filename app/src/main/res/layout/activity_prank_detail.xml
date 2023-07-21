@@ -18,13 +18,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        app:layout_constraintBottom_toBottomOf="@id/btBack"
+        android:gravity="center"
+        android:textColor="@color/white"
         android:id="@+id/tvToolBarTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/quantico_bold"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btBack"
+       app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -32,7 +35,8 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="30dp"
-        app:layout_constraintBottom_toBottomOf="@id/guidline"
+        android:layout_marginBottom="30dp"
+      app:layout_constraintBottom_toTopOf="@id/bottomSheetCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvToolBarTitle" />
@@ -45,17 +49,19 @@
         app:layout_constraintGuide_percent="0.60" />
 
     <androidx.cardview.widget.CardView
+
         android:id="@+id/bottomSheetCardView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="25dp"
         app:cardBackgroundColor="#403F3F"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/adView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guidline">
+       >
 
         <LinearLayout
+            android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -93,51 +99,9 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/baseline_check_circle_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btShakeActive"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="30dp"
-                android:background="@drawable/active_prank_model_background"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/ivShakeIcon"
+                    android:padding="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:src="@drawable/touch_icon"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:fontFamily="@font/quantico_bold"
-                    android:text="Shake"
-                    android:textColor="@color/activeRadioButtonContentColor"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/ivShakeIcon"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
                     android:layout_margin="8dp"
                     android:src="@drawable/baseline_check_circle_24"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -177,15 +141,58 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:padding="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:src="@drawable/baseline_radio_button_unchecked_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btShakeActive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/active_prank_model_background"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/ivShakeIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/shake_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:fontFamily="@font/quantico_bold"
+                    android:text="Shake"
+                    android:textColor="@color/activeRadioButtonContentColor"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivShakeIcon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:padding="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/baseline_check_circle_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btShakeInActive"
                 android:layout_width="match_parent"
@@ -218,9 +225,9 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:padding="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:src="@drawable/baseline_radio_button_unchecked_24"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -242,4 +249,19 @@
                 android:background="@drawable/button_background" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <com.google.android.gms.ads.AdView
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/admob_banner_ad_id">
+    </com.google.android.gms.ads.AdView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
