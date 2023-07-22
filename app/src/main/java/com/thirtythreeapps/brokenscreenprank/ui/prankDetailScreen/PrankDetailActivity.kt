@@ -2,6 +2,7 @@ package com.thirtythreeapps.brokenscreenprank.ui.prankDetailScreen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
@@ -11,6 +12,7 @@ import com.google.android.gms.ads.AdRequest
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.databinding.ActivityPrankDetailBinding
 import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.effectFromJson
+import com.thirtythreeapps.brokenscreenprank.ui.commen.FloatingUiMangerBase
 import com.thirtythreeapps.brokenscreenprank.ui.commen.PrankType
 
 class PrankDetailActivity : AppCompatActivity() {
@@ -60,10 +62,19 @@ class PrankDetailActivity : AppCompatActivity() {
             viewModel.startAndTouchRadioClick(StartPrank(StartPrank.START_PRANK_WHEN_SHAKE))
         }
 
+        binding.btStartPrank.setOnClickListener {
+            if (Settings.canDrawOverlays(this)){
+                val floatingUiMangerBase = FloatingUiMangerBase(this)
+                floatingUiMangerBase.showFloatingUI(R.layout)
+            }else{
+                showDialog()
+            }
+        }
+
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
 
-        showDialog()
+
     }
 
     fun showDialog() {
