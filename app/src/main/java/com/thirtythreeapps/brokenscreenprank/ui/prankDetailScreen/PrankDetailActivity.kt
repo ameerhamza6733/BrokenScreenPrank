@@ -1,24 +1,41 @@
 package com.thirtythreeapps.brokenscreenprank.ui.prankDetailScreen
 
-import androidx.appcompat.app.AppCompatActivity
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment.STYLE_NO_TITLE
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.databinding.ActivityPrankDetailBinding
 import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.effectFromJson
-import com.thirtythreeapps.brokenscreenprank.ui.commen.FloatingUiMangerBase
+import com.thirtythreeapps.brokenscreenprank.ui.commen.FloatingWindowService
 import com.thirtythreeapps.brokenscreenprank.ui.commen.PrankType
+
 
 class PrankDetailActivity : AppCompatActivity() {
     private val TAG ="PrankDetailActivity"
     private lateinit var binding : ActivityPrankDetailBinding
     private val viewModel by viewModels<PrankDetailViewModel> ()
+    private val requestNotificationPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted->
+            if (isGranted) {
+                showFloadtingWin()
+            }
+            else {
+
+            }
+        }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPrankDetailBinding.inflate(layoutInflater)
@@ -64,8 +81,11 @@ class PrankDetailActivity : AppCompatActivity() {
 
         binding.btStartPrank.setOnClickListener {
             if (Settings.canDrawOverlays(this)){
-                val floatingUiMangerBase = FloatingUiMangerBase(this)
-                floatingUiMangerBase.showFloatingUI(R.layout)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    checkNotificationPermission()
+                }else{
+                    showFloadtingWin()
+                }
             }else{
                 showDialog()
             }
@@ -77,6 +97,31 @@ class PrankDetailActivity : AppCompatActivity() {
 
     }
 
+    private fun showFloadtingWin(){
+        val floatingIntent = Intent(this, FloatingWindowService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(floatingIntent)
+        } else {
+            startService(floatingIntent)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun checkNotificationPermission() {
+        val permission = Manifest.permission.POST_NOTIFICATIONS
+        when {
+            ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED -> {
+                // make your action here
+                showFloadtingWin()
+            }
+            shouldShowRequestPermissionRationale(permission) -> {
+
+            }
+            else -> {
+                requestNotificationPermission.launch(permission)
+            }
+        }
+    }
     fun showDialog() {
         val fragmentManager = supportFragmentManager
         val newFragment = EnableOverLayAlertDialog()
