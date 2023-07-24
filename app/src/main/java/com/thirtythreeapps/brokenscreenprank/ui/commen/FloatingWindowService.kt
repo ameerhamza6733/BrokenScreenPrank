@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.ViewTarget
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.ui.MainActivity
+import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.EffectListActivity
 
 
 class FloatingWindowService : Service(), View.OnTouchListener {
@@ -29,6 +30,8 @@ class FloatingWindowService : Service(), View.OnTouchListener {
 
     override fun onCreate() {
         super.onCreate()
+        context = applicationContext
+        create(context)
         createForegroundNotification()
         screenWidth = application.resources.displayMetrics.widthPixels
         screenHeight = application.resources.displayMetrics.heightPixels
@@ -101,7 +104,6 @@ class FloatingWindowService : Service(), View.OnTouchListener {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // Start the service in the foreground, which requires a notification
-        create(this)
 
         showFloatingWindow(
             R.layout.floating_layout,
@@ -113,6 +115,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
             }
             ACTION_STOP_PRANK->{
                 isCrackSecreenPrankRunning = false
+                stopSelf()
                 stopSelf(1)
             }
         }
@@ -134,21 +137,21 @@ class FloatingWindowService : Service(), View.OnTouchListener {
             manager?.createNotificationChannel(channel)
         }
 
-        val notificationIntent = Intent(context, MainActivity::class.java)
+        val notificationIntent = Intent(context, EffectListActivity::class.java)
         var contentIntent: PendingIntent? = PendingIntent.getActivity(
             context,
             0, notificationIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )        // Create the notification to show the foreground service
         val notificationBuilder: NotificationCompat.Builder =
             NotificationCompat.Builder(this, "ForegroundServiceChannel")
-                .setContentTitle("Foreground Service")
+                .setContentTitle(applicationContext.getString(R.string.app_name))
                 .setContentIntent(contentIntent)
-                .setContentText("Touch events are being passed through the floating window.")
+                .setContentText("Click to remove the effect")
                 .setSmallIcon(R.drawable.baseline_circle_notifications_24)
 
         // Start the service in the foreground with the notification
-        startForeground(1, notificationBuilder.build())
+        startForeground(22, notificationBuilder.build())
     }
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
