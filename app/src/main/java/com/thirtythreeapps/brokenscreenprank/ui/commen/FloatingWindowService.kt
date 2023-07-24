@@ -2,6 +2,7 @@ package com.thirtythreeapps.brokenscreenprank.ui.commen
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -13,7 +14,9 @@ import android.view.*
 import android.widget.ImageView
 import androidx.core.app.NotificationCompat
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.ViewTarget
 import com.thirtythreeapps.brokenscreenprank.R
+import com.thirtythreeapps.brokenscreenprank.ui.MainActivity
 
 
 class FloatingWindowService : Service(), View.OnTouchListener {
@@ -58,6 +61,12 @@ class FloatingWindowService : Service(), View.OnTouchListener {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (floatingView!=null)
+        windowManager.removeView(floatingView)
+    }
+
     private fun getNonClickAbleLayoutParams(width: Int, height: Int): WindowManager.LayoutParams {
         return WindowManager.LayoutParams(
             width, height,
@@ -98,6 +107,15 @@ class FloatingWindowService : Service(), View.OnTouchListener {
             R.layout.floating_layout,
             getClickAbleLayoutParams(screenWidth, screenHeight)
         )
+        when(intent?.action){
+            ACTION_CRACK_PRANK->{
+                isCrackSecreenPrankRunning = true
+            }
+            ACTION_STOP_PRANK->{
+                isCrackSecreenPrankRunning = false
+                stopSelf(1)
+            }
+        }
         return START_STICKY
     }
 
@@ -116,10 +134,16 @@ class FloatingWindowService : Service(), View.OnTouchListener {
             manager?.createNotificationChannel(channel)
         }
 
-        // Create the notification to show the foreground service
+        val notificationIntent = Intent(context, MainActivity::class.java)
+        var contentIntent: PendingIntent? = PendingIntent.getActivity(
+            context,
+            0, notificationIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )        // Create the notification to show the foreground service
         val notificationBuilder: NotificationCompat.Builder =
             NotificationCompat.Builder(this, "ForegroundServiceChannel")
                 .setContentTitle("Foreground Service")
+                .setContentIntent(contentIntent)
                 .setContentText("Touch events are being passed through the floating window.")
                 .setSmallIcon(R.drawable.baseline_circle_notifications_24)
 
@@ -131,5 +155,11 @@ class FloatingWindowService : Service(), View.OnTouchListener {
         Log.d(TAG, "ontouch")
 
         return false
+    }
+
+    companion object{
+        val ACTION_STOP_PRANK = "action_stop_prank"
+        val ACTION_CRACK_PRANK: String ="action_crack_prank"
+        var isCrackSecreenPrankRunning = false
     }
 }

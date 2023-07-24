@@ -99,11 +99,16 @@ class PrankDetailActivity : AppCompatActivity() {
 
     private fun showFloadtingWin(){
         val floatingIntent = Intent(this, FloatingWindowService::class.java)
+        floatingIntent.action = FloatingWindowService.ACTION_CRACK_PRANK
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(floatingIntent)
         } else {
             startService(floatingIntent)
         }
+        val startMain = Intent(Intent.ACTION_MAIN)
+        startMain.addCategory(Intent.CATEGORY_HOME)
+        startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(startMain)
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

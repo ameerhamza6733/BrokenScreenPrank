@@ -34,10 +34,16 @@ class EnableOverLayAlertDialog : DialogFragment() {
         view.findViewById<TextView>(R.id.btOpenSettings).setOnClickListener {
             val intent = Intent(
                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:" +context!!.getPackageName())
+                Uri.parse("package:" +requireContext().packageName)
             )
-            startActivityForResult(intent, 0)
+            startActivity(intent)
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (Settings.canDrawOverlays(requireContext())){
+            dismiss()
+        }
+    }
 }
