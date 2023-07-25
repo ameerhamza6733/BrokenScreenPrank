@@ -18,6 +18,8 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.databinding.ActivityEffectListBinding
 import com.thirtythreeapps.brokenscreenprank.ui.commen.FloatingWindowService
+import com.thirtythreeapps.brokenscreenprank.ui.commen.RateMeDialogFragment
+import com.thirtythreeapps.brokenscreenprank.ui.commen.SharedPrefManger
 import com.thirtythreeapps.brokenscreenprank.ui.prankDetailScreen.PrankDetailActivity
 
 
@@ -66,6 +68,16 @@ class EffectListActivity : AppCompatActivity() {
                     startForegroundService(floatingIntent)
                 } else {
                     startService(floatingIntent)
+                }
+
+                if (!SharedPrefManger.getFirstPrank(this.applicationContext)){
+                    val fragmentManager = supportFragmentManager
+                    val newFragment = RateMeDialogFragment()
+                    newFragment.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.my_dialog)
+                    newFragment.show(fragmentManager, "RateMeDialogFragment")
+                    SharedPrefManger.setFirstPrank(this.applicationContext)
+                }else{
+
                 }
             }
         }

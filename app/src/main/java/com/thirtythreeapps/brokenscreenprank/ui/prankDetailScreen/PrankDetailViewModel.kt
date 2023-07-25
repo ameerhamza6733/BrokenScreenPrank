@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 
 class PrankDetailViewModel : ViewModel() {
 
-    private lateinit var startPrank: StartPrank
+     lateinit var startPrank: StartPrank
     private val _shakeOrTouchRadioMutableLiveData: MutableLiveData<StartPrank> = MutableLiveData()
     val shakeAndTouchRadioLiveData: LiveData<StartPrank> = _shakeOrTouchRadioMutableLiveData
 

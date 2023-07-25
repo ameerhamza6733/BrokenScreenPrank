@@ -28,9 +28,6 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        val fragmentManager = supportFragmentManager
-        val newFragment = RateMeDialogFragment()
-        newFragment.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.my_dialog)
-        newFragment.show(fragmentManager, "HelpDialogeFragment")
+
     }
 }

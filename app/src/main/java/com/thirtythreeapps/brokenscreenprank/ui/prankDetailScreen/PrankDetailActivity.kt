@@ -107,6 +107,7 @@ class PrankDetailActivity : AppCompatActivity() {
     private fun startPankService(){
         val floatingIntent = Intent(this, FloatingWindowService::class.java)
         floatingIntent.action = FloatingWindowService.ACTION_CRACK_PRANK
+        floatingIntent.putExtra(FloatingWindowService.EXTRA_PRANK_START_WHEN, viewModel.startPrank.toJson())
         floatingIntent.putExtra(FloatingWindowService.EXTRA_PRANK,this.prankModel.toJson())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(floatingIntent)

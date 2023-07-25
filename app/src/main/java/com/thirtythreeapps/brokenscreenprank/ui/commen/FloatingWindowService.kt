@@ -15,12 +15,14 @@ import android.widget.ImageView
 import androidx.core.app.NotificationCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.ViewTarget
+import com.google.gson.Gson
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.ui.MainActivity
 import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.EffectListActivity
 import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.EffectModel
 import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.effectFromJson
 import com.thirtythreeapps.brokenscreenprank.ui.home.PrankModel
+import com.thirtythreeapps.brokenscreenprank.ui.prankDetailScreen.StartPrank
 
 
 class FloatingWindowService : Service(), View.OnTouchListener {
@@ -108,10 +110,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // Start the service in the foreground, which requires a notification
-        showFloatingWindow(
-            R.layout.floating_layout,
-            getClickAbleLayoutParams(screenWidth, screenHeight)
-        )
+
         intent?.getStringExtra(EXTRA_PRANK)?.let { prankJson ->
             effectModel = prankJson.effectFromJson()
         }
@@ -126,6 +125,18 @@ class FloatingWindowService : Service(), View.OnTouchListener {
                 stopSelf(1)
             }
         }
+        intent?.getStringExtra(EXTRA_PRANK_START_WHEN)?.let {startPrankJson->
+            val startPrank = Gson().fromJson<StartPrank>(startPrankJson,StartPrank::class.java)
+            when(startPrank.startWhen){
+                StartPrank.START_PRANK_WHEN_TOUCH->{
+                    showFloatingWindow(
+                        R.layout.floating_layout,
+                        getClickAbleLayoutParams(screenWidth, screenHeight)
+                    )
+                }
+            }
+        }
+
         return START_STICKY
     }
 
@@ -168,6 +179,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
     }
 
     companion object {
+        val EXTRA_PRANK_START_WHEN ="prank_start_When"
         val EXTRA_PRANK = "extra_prank"
         val ACTION_STOP_PRANK = "action_stop_prank"
         val ACTION_CRACK_PRANK: String = "action_crack_prank"
