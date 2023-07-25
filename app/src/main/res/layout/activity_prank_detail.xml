@@ -238,7 +238,7 @@
             <TextView
                 android:id="@+id/btStartPrank"
                 android:layout_marginTop="16dp"
-                android:fontFamily="@font/quantico_regular"
+                android:fontFamily="@font/montserrat_extra_bold_800"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"

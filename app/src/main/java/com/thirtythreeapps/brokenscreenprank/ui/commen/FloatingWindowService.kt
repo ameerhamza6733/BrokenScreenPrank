@@ -18,6 +18,9 @@ import com.bumptech.glide.request.target.ViewTarget
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.ui.MainActivity
 import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.EffectListActivity
+import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.EffectModel
+import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.effectFromJson
+import com.thirtythreeapps.brokenscreenprank.ui.home.PrankModel
 
 
 class FloatingWindowService : Service(), View.OnTouchListener {
@@ -27,6 +30,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
     private var floatingView: View? = null
     private var screenWidth: Int = 0
     private var screenHeight: Int = 0
+    private var effectModel: EffectModel? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -60,14 +64,14 @@ class FloatingWindowService : Service(), View.OnTouchListener {
             )
             val crackImage = floatingView?.findViewById<ImageView>(R.id.ivCrackEffect)
             crackImage?.visibility = View.VISIBLE
-            Glide.with(this).asBitmap().load(R.drawable.crack_effect_1).into(crackImage!!)
+            Glide.with(this).asBitmap().load(effectModel?.effectDrawableImage).into(crackImage!!)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (floatingView!=null)
-        windowManager.removeView(floatingView)
+        if (floatingView != null)
+            windowManager.removeView(floatingView)
     }
 
     private fun getNonClickAbleLayoutParams(width: Int, height: Int): WindowManager.LayoutParams {
@@ -104,16 +108,19 @@ class FloatingWindowService : Service(), View.OnTouchListener {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // Start the service in the foreground, which requires a notification
-
         showFloatingWindow(
             R.layout.floating_layout,
             getClickAbleLayoutParams(screenWidth, screenHeight)
         )
-        when(intent?.action){
-            ACTION_CRACK_PRANK->{
+        intent?.getStringExtra(EXTRA_PRANK)?.let { prankJson ->
+            effectModel = prankJson.effectFromJson()
+        }
+        when (intent?.action) {
+            ACTION_CRACK_PRANK -> {
                 isCrackSecreenPrankRunning = true
             }
-            ACTION_STOP_PRANK->{
+
+            ACTION_STOP_PRANK -> {
                 isCrackSecreenPrankRunning = false
                 stopSelf()
                 stopSelf(1)
@@ -160,9 +167,10 @@ class FloatingWindowService : Service(), View.OnTouchListener {
         return false
     }
 
-    companion object{
+    companion object {
+        val EXTRA_PRANK = "extra_prank"
         val ACTION_STOP_PRANK = "action_stop_prank"
-        val ACTION_CRACK_PRANK: String ="action_crack_prank"
+        val ACTION_CRACK_PRANK: String = "action_crack_prank"
         var isCrackSecreenPrankRunning = false
     }
 }

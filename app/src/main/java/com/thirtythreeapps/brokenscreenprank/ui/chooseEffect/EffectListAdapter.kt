@@ -20,7 +20,7 @@ class EffectListAdapter(val list: List<EffectModel>,val onClick:(EffectModel)->U
 
     override fun onBindViewHolder(holder: EffectListViewHolder, position: Int) {
         val effectModel = list.get(holder.adapterPosition)
-        Glide.with(holder.itemView.context).asBitmap().load(effectModel.effectDrawableImage).into(holder.rowCrackPreviewBinding.ivCrackPreview)
+        Glide.with(holder.itemView.context).asBitmap().load(effectModel.effectPreviewDrawableImage).into(holder.rowCrackPreviewBinding.ivCrackPreview)
         holder.rowCrackPreviewBinding.root.setOnClickListener {
             onClick(effectModel)
         }

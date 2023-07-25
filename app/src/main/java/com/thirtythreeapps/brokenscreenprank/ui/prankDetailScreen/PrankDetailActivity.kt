@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -18,22 +19,24 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.databinding.ActivityPrankDetailBinding
+import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.EffectModel
 import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.effectFromJson
 import com.thirtythreeapps.brokenscreenprank.ui.commen.FloatingWindowService
 import com.thirtythreeapps.brokenscreenprank.ui.commen.PrankType
 
 
 class PrankDetailActivity : AppCompatActivity() {
+    private lateinit var prankModel: EffectModel
     private val TAG ="PrankDetailActivity"
     private lateinit var binding : ActivityPrankDetailBinding
     private val viewModel by viewModels<PrankDetailViewModel> ()
     private val requestNotificationPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted->
             if (isGranted) {
-                showFloadtingWin()
+                startPankService()
             }
             else {
-
+                Toast.makeText(this,"Notification permission need",Toast.LENGTH_LONG).show()
             }
         }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +44,12 @@ class PrankDetailActivity : AppCompatActivity() {
         binding = ActivityPrankDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val prank  = intent?.getStringExtra(EXTRA_PRANK)
-        val effectModel =  prank?.effectFromJson()
-        binding.tvToolBarTitle.text =when( effectModel?.prankType){
+        if (prank==null){
+            finish()
+        }else{
+            prankModel = prank!!.effectFromJson()
+        }
+        binding.tvToolBarTitle.text =when( prankModel?.prankType){
             PrankType.BROKEN_SCREEN_PRANK->{
                 "BROKEN SCREEN"
             }
@@ -51,8 +58,8 @@ class PrankDetailActivity : AppCompatActivity() {
             }
 
         }
-        Log.d(TAG,"effect ${effectModel?.toJson()}")
-        Glide.with(this).asBitmap().load(effectModel?.effectDrawableImage).into(binding.ivPrankPreview)
+        Log.d(TAG,"effect ${prankModel?.toJson()}")
+        Glide.with(this).asBitmap().load(prankModel?.effectPreviewDrawableImage).into(binding.ivPrankPreview)
        viewModel.shakeAndTouchRadioLiveData.observe(this){startPrank->
            when(startPrank.startWhen){
                StartPrank.START_PRANK_WHEN_TOUCH->{
@@ -84,7 +91,7 @@ class PrankDetailActivity : AppCompatActivity() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     checkNotificationPermission()
                 }else{
-                    showFloadtingWin()
+                    startPankService()
                 }
             }else{
                 showDialog()
@@ -97,9 +104,10 @@ class PrankDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun showFloadtingWin(){
+    private fun startPankService(){
         val floatingIntent = Intent(this, FloatingWindowService::class.java)
         floatingIntent.action = FloatingWindowService.ACTION_CRACK_PRANK
+        floatingIntent.putExtra(FloatingWindowService.EXTRA_PRANK,this.prankModel.toJson())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(floatingIntent)
         } else {
@@ -117,10 +125,10 @@ class PrankDetailActivity : AppCompatActivity() {
         when {
             ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED -> {
                 // make your action here
-                showFloadtingWin()
+                startPankService()
             }
             shouldShowRequestPermissionRationale(permission) -> {
-
+                Toast.makeText(this,"Please goto phone settings>app>${getString(R.string.app_name)}>Permission",Toast.LENGTH_LONG).show()
             }
             else -> {
                 requestNotificationPermission.launch(permission)

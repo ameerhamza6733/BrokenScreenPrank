@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_marginStart="20dp"
+    android:layout_marginEnd="18dp"
+    app:cardBackgroundColor="@color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -7,17 +10,60 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-
+        android:layout_marginTop="18dp"
+        android:id="@+id/tv"
+        android:textColor="@color/white"
         android:textSize="20sp"
-        android:fontFamily="@font/quantico_bold"
+        android:fontFamily="@font/montserrat_extra_bold_800"
         android:text="HOW TO TURN OFF?"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-    <Switch
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.SwitchCompat
+
+        android:checked="true"
+        android:id="@+id/switch1"
+        android:layout_marginTop="44dp"
+        android:gravity="center"
+android:scaleX="2"
+        android:scaleY="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"/>
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="39dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/montserrat_medium_500"
+        android:textSize="18sp"
+        android:text="@string/turn_of_detail"
+        android:id="@+id/tv1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/switch1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/btGotIt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="18dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_marginTop="31dp"
+        android:layout_marginStart="39dp"
+        android:layout_marginEnd="39dp"
+android:padding="8dp"
+        android:text="Got It"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv1"
+        android:fontFamily="@font/montserrat_extra_bold_800"
+        android:background="@drawable/button_background"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

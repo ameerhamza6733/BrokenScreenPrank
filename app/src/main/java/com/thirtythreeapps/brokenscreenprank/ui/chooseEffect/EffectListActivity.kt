@@ -7,12 +7,16 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.gms.ads.AdRequest
+
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.databinding.ActivityEffectListBinding
 import com.thirtythreeapps.brokenscreenprank.ui.commen.FloatingWindowService
+import com.thirtythreeapps.brokenscreenprank.ui.prankDetailScreen.EnableOverLayAlertDialog
 import com.thirtythreeapps.brokenscreenprank.ui.prankDetailScreen.PrankDetailActivity
+
 
 class EffectListActivity : AppCompatActivity() {
     private val viewModel: EffectListActivityViewModel by viewModels()
@@ -33,8 +37,17 @@ class EffectListActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
+        binding.layoutToolbar.toolbarHelpButton.setOnClickListener {
+
+            val fragmentManager = supportFragmentManager
+            val newFragment = HelpDialogeFragment()
+            newFragment.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.my_dialog)
+            newFragment.show(fragmentManager, "HelpDialogeFragment")
+
+
+        }
         binding.switchTurnOfCrackPrank.setOnCheckedChangeListener { compoundButton, isChecked ->
-            if (!isChecked){
+            if (!isChecked) {
                 val floatingIntent = Intent(this, FloatingWindowService::class.java)
                 floatingIntent.action = FloatingWindowService.ACTION_STOP_PRANK
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -48,14 +61,14 @@ class EffectListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-            if (FloatingWindowService.isCrackSecreenPrankRunning){
-                binding.tvTurnOfPrank.visibility = View.VISIBLE
-                binding.switchTurnOfCrackPrank.visibility = View.VISIBLE
-                binding.switchTurnOfCrackPrank.isChecked = true
-            }else{
-                binding.tvTurnOfPrank.visibility= View.GONE
-                binding.switchTurnOfCrackPrank.visibility = View.GONE
-            }
+        if (FloatingWindowService.isCrackSecreenPrankRunning) {
+            binding.tvTurnOfPrank.visibility = View.VISIBLE
+            binding.switchTurnOfCrackPrank.visibility = View.VISIBLE
+            binding.switchTurnOfCrackPrank.isChecked = true
+        } else {
+            binding.tvTurnOfPrank.visibility = View.GONE
+            binding.switchTurnOfCrackPrank.visibility = View.GONE
+        }
 
     }
 }

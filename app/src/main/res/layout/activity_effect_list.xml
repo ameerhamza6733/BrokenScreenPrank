@@ -18,7 +18,7 @@
         android:id="@+id/tvTurnOfPrank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_regular"
+        android:fontFamily="@font/montserrat_medium_500"
         android:text="Turn off broken screen"
         android:textColor="@color/white"
         android:textSize="20sp"

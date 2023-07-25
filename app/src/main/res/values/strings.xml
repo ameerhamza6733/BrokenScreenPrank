@@ -9,6 +9,11 @@
     <string name="home">Home</string>
     <string name="crack_effec">CRACK EFFECT</string>
 
+    <string name="turn_of_detail">Return to the Broken
+Screen app and disable
+the "Switch button"
+to remove the broken
+screen effect.</string>
     <string name="please_enab">
 Please enable the "Draw over other apps" permission for the Broken Screen Prank application so that we can display the cracked screen effect on your device.
 </string>

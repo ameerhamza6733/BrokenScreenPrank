@@ -3,7 +3,7 @@ package com.thirtythreeapps.brokenscreenprank.ui.chooseEffect
 import com.google.gson.Gson
 import com.thirtythreeapps.brokenscreenprank.ui.commen.PrankType
 
-data class EffectModel (val effectDrawableImage:Int,val prankType:Int=PrankType.BROKEN_SCREEN_PRANK){
+data class EffectModel (val effectPreviewDrawableImage:Int,val effectDrawableImage:Int, val prankType:Int=PrankType.BROKEN_SCREEN_PRANK){
     fun toJson():String {
         return Gson().toJson(this)
     }
