@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.thirtythreeapps.brokenscreenprank.databinding.RowCrackPreviewBinding
 
-class EffectListAdapter(val list: List<EffectModel>,val onClick:(EffectModel)->Unit)  : Adapter<EffectListAdapter.EffectListViewHolder>() {
+class EffectListAdapter(val list: List<PrankDetail>,val onClick:(PrankDetail)->Unit)  : Adapter<EffectListAdapter.EffectListViewHolder>() {
     inner class EffectListViewHolder(val rowCrackPreviewBinding: RowCrackPreviewBinding): ViewHolder(rowCrackPreviewBinding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EffectListViewHolder {

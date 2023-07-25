@@ -19,21 +19,25 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.databinding.ActivityPrankDetailBinding
-import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.EffectModel
-import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.effectFromJson
+import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.PrankDetail
+import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.prankDetailFromJson
+
+
 import com.thirtythreeapps.brokenscreenprank.ui.commen.FloatingWindowService
 import com.thirtythreeapps.brokenscreenprank.ui.commen.PrankType
+import com.thirtythreeapps.brokenscreenprank.ui.commen.ShakeDetectionService
 
 
 class PrankDetailActivity : AppCompatActivity() {
-    private lateinit var prankModel: EffectModel
+    private lateinit var prankModel: PrankDetail
     private val TAG ="PrankDetailActivity"
     private lateinit var binding : ActivityPrankDetailBinding
     private val viewModel by viewModels<PrankDetailViewModel> ()
     private val requestNotificationPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted->
             if (isGranted) {
-                startPankService()
+                startPrankService()
+                openUserHomeScreen()
             }
             else {
                 Toast.makeText(this,"Notification permission need",Toast.LENGTH_LONG).show()
@@ -47,7 +51,7 @@ class PrankDetailActivity : AppCompatActivity() {
         if (prank==null){
             finish()
         }else{
-            prankModel = prank!!.effectFromJson()
+            prankModel = prank!!.prankDetailFromJson()
         }
         binding.tvToolBarTitle.text =when( prankModel?.prankType){
             PrankType.BROKEN_SCREEN_PRANK->{
@@ -87,24 +91,38 @@ class PrankDetailActivity : AppCompatActivity() {
         }
 
         binding.btStartPrank.setOnClickListener {
-            if (Settings.canDrawOverlays(this)){
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    checkNotificationPermission()
-                }else{
-                    startPankService()
-                }
-            }else{
-                showDialog()
-            }
-        }
+           if (viewModel.startPrank.startWhen == StartPrank.START_PRANK_WHEN_TOUCH){
+               if (Settings.canDrawOverlays(this)){
+                   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                       checkNotificationPermission()
+                   }else{
+                       startPrankService()
+                       openUserHomeScreen()
+                   }
+               }else{
+                   showDialog()
+               }
+           }else{
 
+               val serviceIntent = Intent(this, ShakeDetectionService::class.java)
+               serviceIntent.putExtra(ShakeDetectionService.EXTRA_PRANK_START_WHEN,viewModel.startPrank.toJson())
+               serviceIntent.putExtra(ShakeDetectionService.EXTRA_PRANK ,prankModel.toJson() )
+               ContextCompat.startForegroundService(this, serviceIntent)
+               openUserHomeScreen()
+           }
+        }
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
 
 
     }
 
-    private fun startPankService(){
+    private fun startPrankService(){
+        if (FloatingWindowService.isCrackSecreenPrankRunning){
+            val stopPrank = Intent(this,FloatingWindowService::class.java)
+            stopPrank.action = FloatingWindowService.ACTION_STOP_PRANK
+            ContextCompat.startForegroundService(this,stopPrank)
+        }
         val floatingIntent = Intent(this, FloatingWindowService::class.java)
         floatingIntent.action = FloatingWindowService.ACTION_CRACK_PRANK
         floatingIntent.putExtra(FloatingWindowService.EXTRA_PRANK_START_WHEN, viewModel.startPrank.toJson())
@@ -114,10 +132,15 @@ class PrankDetailActivity : AppCompatActivity() {
         } else {
             startService(floatingIntent)
         }
+
+    }
+
+    private fun openUserHomeScreen(){
         val startMain = Intent(Intent.ACTION_MAIN)
         startMain.addCategory(Intent.CATEGORY_HOME)
         startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(startMain)
+        finish()
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -126,7 +149,7 @@ class PrankDetailActivity : AppCompatActivity() {
         when {
             ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED -> {
                 // make your action here
-                startPankService()
+                startPrankService()
             }
             shouldShowRequestPermissionRationale(permission) -> {
                 Toast.makeText(this,"Please goto phone settings>app>${getString(R.string.app_name)}>Permission",Toast.LENGTH_LONG).show()

@@ -19,8 +19,10 @@ import com.google.gson.Gson
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.ui.MainActivity
 import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.EffectListActivity
-import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.EffectModel
-import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.effectFromJson
+
+import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.PrankDetail
+
+import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.prankDetailFromJson
 import com.thirtythreeapps.brokenscreenprank.ui.home.PrankModel
 import com.thirtythreeapps.brokenscreenprank.ui.prankDetailScreen.StartPrank
 
@@ -32,7 +34,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
     private var floatingView: View? = null
     private var screenWidth: Int = 0
     private var screenHeight: Int = 0
-    private var effectModel: EffectModel? = null
+    private var effectModel: PrankDetail? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -72,6 +74,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
 
     override fun onDestroy() {
         super.onDestroy()
+        isCrackSecreenPrankRunning = false
         if (floatingView != null)
             windowManager.removeView(floatingView)
     }
@@ -112,7 +115,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
         // Start the service in the foreground, which requires a notification
 
         intent?.getStringExtra(EXTRA_PRANK)?.let { prankJson ->
-            effectModel = prankJson.effectFromJson()
+            effectModel = prankJson.prankDetailFromJson()
         }
         when (intent?.action) {
             ACTION_CRACK_PRANK -> {
@@ -125,15 +128,29 @@ class FloatingWindowService : Service(), View.OnTouchListener {
                 stopSelf(1)
             }
         }
-        intent?.getStringExtra(EXTRA_PRANK_START_WHEN)?.let {startPrankJson->
-            val startPrank = Gson().fromJson<StartPrank>(startPrankJson,StartPrank::class.java)
-            when(startPrank.startWhen){
-                StartPrank.START_PRANK_WHEN_TOUCH->{
+        intent?.getStringExtra(EXTRA_PRANK_START_WHEN)?.let { startPrankJson ->
+            val startPrank = Gson().fromJson<StartPrank>(startPrankJson, StartPrank::class.java)
+            when (startPrank.startWhen) {
+                StartPrank.START_PRANK_WHEN_TOUCH -> {
+                    applicationContext.vibrateDevice(1000)
                     showFloatingWindow(
                         R.layout.floating_layout,
                         getClickAbleLayoutParams(screenWidth, screenHeight)
                     )
                 }
+
+                StartPrank.START_PRANK_WHEN_SHAKE -> {
+                    showFloatingWindow(
+                        R.layout.floating_layout,
+                        getNonClickAbleLayoutParams(width = screenWidth, height = screenHeight)
+                    )
+                    val crackImage = floatingView?.findViewById<ImageView>(R.id.ivCrackEffect)
+                    crackImage?.visibility = View.VISIBLE
+                    Glide.with(this).asBitmap().load(effectModel?.effectDrawableImage)
+                        .into(crackImage!!)
+                }
+
+                else -> {}
             }
         }
 
@@ -179,7 +196,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
     }
 
     companion object {
-        val EXTRA_PRANK_START_WHEN ="prank_start_When"
+        val EXTRA_PRANK_START_WHEN = "prank_start_When"
         val EXTRA_PRANK = "extra_prank"
         val ACTION_STOP_PRANK = "action_stop_prank"
         val ACTION_CRACK_PRANK: String = "action_crack_prank"
