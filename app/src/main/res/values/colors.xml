@@ -11,5 +11,7 @@
     <color name="activeRadioButtonBackgroundColor">#4A356C22</color>
     <color name="inActiveRadioButtonContentColor">#666666</color>
     <color name="activeRadioButtonContentColor">#65D13F</color>
+    <color name="rating_normal">#d9d9d9</color>
+    <color name="rating_active">#FFCD07</color>
 
 </resources>
