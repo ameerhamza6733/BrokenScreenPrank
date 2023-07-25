@@ -52,7 +52,7 @@ class ShakeDetectionService : Service() {
 
                     if (acceleration > SHAKE_THRESHOLD) {
                       if (!FloatingWindowService.isCrackSecreenPrankRunning){
-                          applicationContext.vibrateDevice(1000)
+                          applicationContext.vibrateDevice(200)
                           val floatingIntent = Intent(applicationContext, FloatingWindowService::class.java)
                           floatingIntent.action = FloatingWindowService.ACTION_CRACK_PRANK
                           floatingIntent.putExtra(FloatingWindowService.EXTRA_PRANK_START_WHEN,startPrank.toJson() )
@@ -80,12 +80,14 @@ class ShakeDetectionService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        startForegroundService()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        startForegroundService()
+
         intent?.getStringExtra(EXTRA_PRANK)?.let {extraPrank->
             prankModel = extraPrank.prankDetailFromJson()
         }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.provider.Settings
 import android.util.Log
 import android.view.View
@@ -103,7 +104,7 @@ class PrankDetailActivity : AppCompatActivity() {
                    showDialog()
                }
            }else{
-
+               stopPrank()
                val serviceIntent = Intent(this, ShakeDetectionService::class.java)
                serviceIntent.putExtra(ShakeDetectionService.EXTRA_PRANK_START_WHEN,viewModel.startPrank.toJson())
                serviceIntent.putExtra(ShakeDetectionService.EXTRA_PRANK ,prankModel.toJson() )
@@ -118,21 +119,28 @@ class PrankDetailActivity : AppCompatActivity() {
     }
 
     private fun startPrankService(){
+        var delayInMille = 0L
         if (FloatingWindowService.isCrackSecreenPrankRunning){
-            val stopPrank = Intent(this,FloatingWindowService::class.java)
-            stopPrank.action = FloatingWindowService.ACTION_STOP_PRANK
-            ContextCompat.startForegroundService(this,stopPrank)
+            stopPrank()
+           delayInMille = 1000L
         }
-        val floatingIntent = Intent(this, FloatingWindowService::class.java)
-        floatingIntent.action = FloatingWindowService.ACTION_CRACK_PRANK
-        floatingIntent.putExtra(FloatingWindowService.EXTRA_PRANK_START_WHEN, viewModel.startPrank.toJson())
-        floatingIntent.putExtra(FloatingWindowService.EXTRA_PRANK,this.prankModel.toJson())
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(floatingIntent)
-        } else {
-            startService(floatingIntent)
-        }
+       Handler().postDelayed(Runnable {
+           val floatingIntent = Intent(this, FloatingWindowService::class.java)
+           floatingIntent.action = FloatingWindowService.ACTION_CRACK_PRANK
+           floatingIntent.putExtra(FloatingWindowService.EXTRA_PRANK_START_WHEN, viewModel.startPrank.toJson())
+           floatingIntent.putExtra(FloatingWindowService.EXTRA_PRANK,this.prankModel.toJson())
+           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+               startForegroundService(floatingIntent)
+           } else {
+               startService(floatingIntent)
+           } },delayInMille)
 
+    }
+
+    private fun stopPrank(){
+        val stopPrank = Intent(this,FloatingWindowService::class.java)
+        stopPrank.action = FloatingWindowService.ACTION_STOP_PRANK
+        ContextCompat.startForegroundService(this,stopPrank)
     }
 
     private fun openUserHomeScreen(){
@@ -150,6 +158,7 @@ class PrankDetailActivity : AppCompatActivity() {
             ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED -> {
                 // make your action here
                 startPrankService()
+                openUserHomeScreen()
             }
             shouldShowRequestPermissionRationale(permission) -> {
                 Toast.makeText(this,"Please goto phone settings>app>${getString(R.string.app_name)}>Permission",Toast.LENGTH_LONG).show()

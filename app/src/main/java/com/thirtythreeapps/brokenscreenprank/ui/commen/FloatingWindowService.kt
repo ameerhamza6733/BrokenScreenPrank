@@ -132,7 +132,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
             val startPrank = Gson().fromJson<StartPrank>(startPrankJson, StartPrank::class.java)
             when (startPrank.startWhen) {
                 StartPrank.START_PRANK_WHEN_TOUCH -> {
-                    applicationContext.vibrateDevice(1000)
+
                     showFloatingWindow(
                         R.layout.floating_layout,
                         getClickAbleLayoutParams(screenWidth, screenHeight)
@@ -140,6 +140,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
                 }
 
                 StartPrank.START_PRANK_WHEN_SHAKE -> {
+                    applicationContext.vibrateDevice(200)
                     showFloatingWindow(
                         R.layout.floating_layout,
                         getNonClickAbleLayoutParams(width = screenWidth, height = screenHeight)
