@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
+    id("com.google.firebase.crashlytics")
+
 }
 //https://www.figma.com/file/W5ObNLe7Aq1z50mW6VxcgV/Broken-Screen-Prank?type=design&node-id=0%3A1&mode=design&t=3x4dufMr8CphhSGJ-1
 android {
@@ -50,5 +53,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:22.2.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation 'com.google.code.gson:gson:2.10.1'
+    implementation platform('com.google.firebase:firebase-bom:32.2.0')
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="126dp"
+    android:layout_height="@dimen/_126sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/prank_type_background">
     <TextView
@@ -9,21 +9,43 @@
         android:textSize="22sp"
         android:textColor="@color/white"
         android:id="@+id/tvPrankName"
-        app:layout_constraintEnd_toStartOf="@id/ivPrankImage"
+        app:layout_constraintEnd_toStartOf="@id/guidline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:fontFamily="@font/quantico_bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.50"
+        android:id="@+id/guidline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <ImageView
+
+        android:layout_marginTop="@dimen/_22sdp"
+        android:rotation="27"
+        android:id="@+id/ivPrankImage2"
+        android:layout_width="@dimen/_37sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_marginStart="@dimen/_30sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ivPrankImage"
+
+        />
+    <ImageView
+        android:elevation="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_19sdp"
         android:layout_margin="16dp"
-        app:layout_constraintStart_toEndOf="@id/tvPrankName"
+        app:layout_constraintStart_toEndOf="@id/guidline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+
         android:id="@+id/ivPrankImage"
-        android:layout_width="0dp"
-        android:layout_height="0dp"/>
+        android:layout_width="@dimen/_37sdp"
+        android:layout_height="@dimen/_80sdp"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

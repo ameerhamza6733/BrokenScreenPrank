@@ -51,6 +51,12 @@ class PrankDetailActivity : AppCompatActivity() {
         val prank  = intent?.getStringExtra(EXTRA_PRANK)
         if (prank==null){
             finish()
+
+            finish()
+            finish()
+            finish()
+
+
         }else{
             prankModel = prank!!.prankDetailFromJson()
         }

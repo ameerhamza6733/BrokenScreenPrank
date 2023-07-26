@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "286001601714",
+    "project_id": "broken-screen-prank-f269c",
+    "storage_bucket": "broken-screen-prank-f269c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286001601714:android:66171e19032b2dfbf87dab",
+        "android_client_info": {
+          "package_name": "com.thirtythreeapps.brokenscreenprank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286001601714-a8vld1grijtqe3kqk5vigtghsd78lp9e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6rUwzGB_vw5UZ7kIRyqCWZYjZkZ3x9MA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286001601714-a8vld1grijtqe3kqk5vigtghsd78lp9e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

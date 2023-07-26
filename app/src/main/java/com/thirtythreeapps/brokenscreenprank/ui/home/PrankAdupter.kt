@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.thirtythreeapps.brokenscreenprank.R
 import com.thirtythreeapps.brokenscreenprank.databinding.RowPrankTypeBinding
 import com.thirtythreeapps.brokenscreenprank.ui.commen.PrankType
@@ -31,6 +32,8 @@ class PrankAdupter(val list: List<PrankModel>, val onClick:(PrankModel)->Unit) :
         when(prank.type){
             PrankType.BROKEN_SCREEN_PRANK ->{
                 Glide.with(context).load(R.drawable.home_broken_screen_prank).into(holder.prankTypeRow.ivPrankImage)
+                Glide.with(context).load(R.drawable.fram).apply(RequestOptions().centerCrop())
+                    .into(holder.prankTypeRow.ivPrankImage2)
             }
         }
     }
