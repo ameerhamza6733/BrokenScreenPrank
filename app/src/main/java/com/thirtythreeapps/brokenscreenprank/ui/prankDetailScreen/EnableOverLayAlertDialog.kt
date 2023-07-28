@@ -38,6 +38,9 @@ class EnableOverLayAlertDialog : DialogFragment() {
             )
             startActivity(intent)
         }
+        view.findViewById<TextView>(R.id.btCancel).setOnClickListener {
+            dismiss()
+        }
     }
 
     override fun onResume() {

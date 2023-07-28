@@ -27,14 +27,15 @@
         android:layout_marginTop="@dimen/_22sdp"
         android:rotation="27"
         android:id="@+id/ivPrankImage2"
-        android:layout_width="@dimen/_37sdp"
-        android:layout_height="@dimen/_80sdp"
+        android:layout_width="@dimen/_49sdp"
+        android:layout_height="@dimen/_93sdp"
         android:layout_marginStart="@dimen/_30sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@+id/ivPrankImage"
 
         />
     <ImageView
+        app:layout_constraintEnd_toEndOf="parent"
         android:elevation="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_19sdp"
         android:layout_margin="16dp"
@@ -43,8 +44,8 @@
         app:layout_constraintTop_toTopOf="parent"
 
         android:id="@+id/ivPrankImage"
-        android:layout_width="@dimen/_37sdp"
-        android:layout_height="@dimen/_80sdp"/>
+        android:layout_width="@dimen/_49sdp"
+        android:layout_height="@dimen/_83sdp"/>
 
 
 

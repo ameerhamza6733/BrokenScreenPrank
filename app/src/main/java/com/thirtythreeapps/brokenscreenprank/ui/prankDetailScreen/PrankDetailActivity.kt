@@ -51,12 +51,6 @@ class PrankDetailActivity : AppCompatActivity() {
         val prank  = intent?.getStringExtra(EXTRA_PRANK)
         if (prank==null){
             finish()
-
-            finish()
-            finish()
-            finish()
-
-
         }else{
             prankModel = prank!!.prankDetailFromJson()
         }
@@ -95,11 +89,12 @@ class PrankDetailActivity : AppCompatActivity() {
         }
         binding.btShakeInActive.setOnClickListener {
             viewModel.startAndTouchRadioClick(StartPrank(StartPrank.START_PRANK_WHEN_SHAKE))
+
         }
 
         binding.btStartPrank.setOnClickListener {
-           if (viewModel.startPrank.startWhen == StartPrank.START_PRANK_WHEN_TOUCH){
-               if (Settings.canDrawOverlays(this)){
+
+             if (Settings.canDrawOverlays(this)){
                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                        checkNotificationPermission()
                    }else{
@@ -109,14 +104,6 @@ class PrankDetailActivity : AppCompatActivity() {
                }else{
                    showDialog()
                }
-           }else{
-               stopPrank()
-               val serviceIntent = Intent(this, ShakeDetectionService::class.java)
-               serviceIntent.putExtra(ShakeDetectionService.EXTRA_PRANK_START_WHEN,viewModel.startPrank.toJson())
-               serviceIntent.putExtra(ShakeDetectionService.EXTRA_PRANK ,prankModel.toJson() )
-               ContextCompat.startForegroundService(this, serviceIntent)
-               openUserHomeScreen()
-           }
         }
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
@@ -124,23 +111,39 @@ class PrankDetailActivity : AppCompatActivity() {
 
     }
 
+    private fun startDetectShakeService(){
+        stopPrank()
+        val serviceIntent = Intent(this, ShakeDetectionService::class.java)
+        serviceIntent.putExtra(ShakeDetectionService.EXTRA_PRANK_START_WHEN,viewModel.startPrank.toJson())
+        serviceIntent.putExtra(ShakeDetectionService.EXTRA_PRANK ,prankModel.toJson() )
+        ContextCompat.startForegroundService(this, serviceIntent)
+        openUserHomeScreen()
+    }
+
     private fun startPrankService(){
+        if (viewModel.startPrank.startWhen == StartPrank.START_PRANK_WHEN_TOUCH){
+            startTouchDetectionService()
+        }else{
+            startDetectShakeService()
+        }
+    }
+
+    private fun startTouchDetectionService(){
         var delayInMille = 0L
         if (FloatingWindowService.isCrackSecreenPrankRunning){
             stopPrank()
-           delayInMille = 1000L
+            delayInMille = 1000L
         }
-       Handler().postDelayed(Runnable {
-           val floatingIntent = Intent(this, FloatingWindowService::class.java)
-           floatingIntent.action = FloatingWindowService.ACTION_CRACK_PRANK
-           floatingIntent.putExtra(FloatingWindowService.EXTRA_PRANK_START_WHEN, viewModel.startPrank.toJson())
-           floatingIntent.putExtra(FloatingWindowService.EXTRA_PRANK,this.prankModel.toJson())
-           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-               startForegroundService(floatingIntent)
-           } else {
-               startService(floatingIntent)
-           } },delayInMille)
-
+        Handler().postDelayed(Runnable {
+            val floatingIntent = Intent(this, FloatingWindowService::class.java)
+            floatingIntent.action = FloatingWindowService.ACTION_CRACK_PRANK
+            floatingIntent.putExtra(FloatingWindowService.EXTRA_PRANK_START_WHEN, viewModel.startPrank.toJson())
+            floatingIntent.putExtra(FloatingWindowService.EXTRA_PRANK,this.prankModel.toJson())
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(floatingIntent)
+            } else {
+                startService(floatingIntent)
+            } },delayInMille)
     }
 
     private fun stopPrank(){

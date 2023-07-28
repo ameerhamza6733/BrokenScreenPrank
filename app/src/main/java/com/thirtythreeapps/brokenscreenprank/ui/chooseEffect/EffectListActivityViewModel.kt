@@ -8,7 +8,7 @@ class EffectListActivityViewModel() :
 
     fun getCrackEffect(): List<PrankDetail> {
         return listOf<PrankDetail>(
-            PrankDetail(effectPreviewDrawableImage = R.drawable.crack_prank_1_preview, effectDrawableImage = R.drawable.crack_effect_1),
+            PrankDetail(effectPreviewDrawableImage = R.drawable.crack_image_1_preview, effectDrawableImage = R.drawable.crack_effect_1),
             PrankDetail(effectPreviewDrawableImage = R.drawable.crack_prank_2_preview, effectDrawableImage = R.drawable.crack_prank_2),
             PrankDetail(effectPreviewDrawableImage = R.drawable.crack_prank_3_preview, effectDrawableImage = R.drawable.crack_prank_3),
             PrankDetail(effectPreviewDrawableImage = R.drawable.crack_prank_4_preview, effectDrawableImage = R.drawable.crack_prank_4),

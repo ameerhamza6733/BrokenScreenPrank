@@ -31,9 +31,9 @@ class PrankAdupter(val list: List<PrankModel>, val onClick:(PrankModel)->Unit) :
         val context = holder.prankTypeRow.tvPrankName.context
         when(prank.type){
             PrankType.BROKEN_SCREEN_PRANK ->{
-                Glide.with(context).load(R.drawable.home_broken_screen_prank).into(holder.prankTypeRow.ivPrankImage)
-                Glide.with(context).load(R.drawable.fram).apply(RequestOptions().centerCrop())
-                    .into(holder.prankTypeRow.ivPrankImage2)
+                Glide.with(context).load(R.drawable.crack_icon).into(holder.prankTypeRow.ivPrankImage)
+//                Glide.with(context).load(R.drawable.fram).apply(RequestOptions().centerCrop())
+//                    .into(holder.prankTypeRow.ivPrankImage2)
             }
         }
     }
