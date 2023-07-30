@@ -14,16 +14,11 @@ import android.view.*
 import android.widget.ImageView
 import androidx.core.app.NotificationCompat
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.ViewTarget
 import com.google.gson.Gson
 import com.thirtythreeapps.brokenscreenprank.R
-import com.thirtythreeapps.brokenscreenprank.ui.MainActivity
 import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.EffectListActivity
-
 import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.PrankDetail
-
 import com.thirtythreeapps.brokenscreenprank.ui.chooseEffect.prankDetailFromJson
-import com.thirtythreeapps.brokenscreenprank.ui.home.PrankModel
 import com.thirtythreeapps.brokenscreenprank.ui.prankDetailScreen.StartPrank
 
 
@@ -80,22 +75,29 @@ class FloatingWindowService : Service(), View.OnTouchListener {
     }
 
     private fun getNonClickAbleLayoutParams(width: Int, height: Int): WindowManager.LayoutParams {
+
+        val flags = (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                or WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                or WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
+                or WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN)
+
         return WindowManager.LayoutParams(
-            width, height,
+            WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
             } else {
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
             },
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                    or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            flags,
             PixelFormat.TRANSLUCENT
         )
     }
 
     private fun getClickAbleLayoutParams(width: Int, height: Int): WindowManager.LayoutParams {
         return WindowManager.LayoutParams(
-            width, height,
+            WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
             } else {
