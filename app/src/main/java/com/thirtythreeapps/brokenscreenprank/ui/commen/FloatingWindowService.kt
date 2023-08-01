@@ -80,6 +80,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
                 or WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                 or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
                 or WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
                 or WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN)
 
