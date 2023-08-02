@@ -7,15 +7,15 @@ plugins {
 }
 //https://www.figma.com/file/W5ObNLe7Aq1z50mW6VxcgV/Broken-Screen-Prank?type=design&node-id=0%3A1&mode=design&t=3x4dufMr8CphhSGJ-1
 android {
-    namespace 'com.thirtythreeapps.brokenscreenprank'
+    namespace 'com.broken.screen.crack.prank.crackedscreen'
     compileSdk 33
 
     buildFeatures {
         viewBinding true
     }
     defaultConfig {
-        applicationId "com.thirtythreeapps.brokenscreenprank"
-        minSdk 24
+        applicationId "com.broken.screen.crack.prank.crackedscreen"
+        minSdk 21
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -25,7 +25,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

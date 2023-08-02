@@ -4,9 +4,11 @@
     <!--    main screen-->
     <string name="broken_scre">BROKEN\nSCREEN</string>
     <!--   ids-->
-    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_app_id">ca-app-pub-9926601351269528~6291463334</string>
     <string name="admob_banner_ad_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="admob_intersitial_id">ca-app-pub-3940256099942544/1033173712</string>
+
+
     <string name="home">Home</string>
     <string name="crack_effec">CRACK EFFECT</string>
 
